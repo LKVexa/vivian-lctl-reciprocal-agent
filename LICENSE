@@ -1,0 +1,64 @@
+Product Preview Tester License — VIVIAN LCTL Reciprocal Agent
+Version 1.0 | 2026-10-04
+Repository: https://github.com/LKVexa/vivian-lctl-reciprocal-agent
+Licensor: LKVexa, the publisher of the GitHub account at https://github.com/LKVexa
+
+1. Covered material and product scope
+
+This license applies only to the original copyrightable material that LKVexa owns or is authorized to license in the repository identified above (the "Preview Material"). It includes the VIVIAN LCTL Reciprocal Agent source identified by the basename player_reciprocal.lctlc, its corresponding .brir and .brimg policy artifacts, and the accompanying original runner, integration examples, tests, configuration, and documentation, to the extent present. Separately licensed third-party material is excluded, as explained in section 2. This license does not grant rights in other VIVIAN agent repositories or the VIVIAN application itself.
+
+The Reciprocal Agent copies the opponent's previous observed action, using action 0 as its opening input. Its preview scope includes evaluating that response-to-history policy within the VIVIAN game stage. The policy neither observes the opponent's current simultaneous move nor guarantees cooperation or a stable outcome.
+
+The .brimg artifacts in this repository are compiled executable policies, not trained neural-model weights. No BRIM language-model weights, model checkpoints, tokenizer assets, or training datasets are supplied or licensed by this license. References to future model integration do not grant rights in a model; any model obtained separately remains subject to its own terms.
+
+2. Third-party rights take priority for third-party material
+
+BottleRocket upstream code, including any copied brim_ref.py, remains governed by its original Apache License, Version 2.0. The files under licenses/BOTTLEROCKET_* preserve its license and notices; any copies of BOTTLEROCKET_LICENSE or BOTTLEROCKET_NOTICE elsewhere serve the same purpose. Other third-party material remains governed by its respective license, whether identified in a source file, accompanying notice, or other applicable license record.
+
+None of this license's testing-only limits, production restrictions, redistribution restrictions, or termination terms restrict rights independently granted under Apache 2.0 or another third-party license. This license does not relicense third-party code. Keep its required license texts, attribution, notices, and notices of modifications when applicable. If terms conflict for third-party material, its applicable original license controls for that material.
+
+3. Permission for preview testing
+
+Subject to these terms, LKVexa grants you a worldwide, nonexclusive, royalty-free copyright license to download, inspect, copy, build, run, and privately modify the Preview Material solely to evaluate and test this product. Individuals and organizations, including commercial companies, may conduct internal evaluation, research into its behavior, benchmarking, prototype integration, and compatibility testing. You may let your employees and contractors access copies as necessary for your internal testing, provided they follow these terms and do not acquire broader rights through you.
+
+Evaluation may involve the licensed game policy, its test harness, and mock or separately authorized integrations. It does not permit production deployment. This license has no scheduled expiration; it continues while you comply with it, subject to section 9. Later publication of different terms does not retroactively change the terms for copies you received under this version.
+
+4. Uses requiring separate permission
+
+Except for the third-party and GitHub rights preserved by sections 2 and 5, this license does not permit using the Preview Material or a modified version in production, in operational business workflows, or to deliver a commercial or customer-facing service. It does not permit selling, renting, commercially deploying, sublicensing, or incorporating the Preview Material into a product or service distributed to others. Evaluation inside a commercial company is permitted under section 3; using the software to carry out that company's ordinary operations is not.
+
+You may not redistribute the Preview Material outside the testing arrangements in section 3 and the GitHub arrangements in section 5 without separate written permission from LKVexa. You may not remove or obscure required copyright, license, attribution, or third-party notices. These restrictions apply only to the Preview Material and copies or derivatives of it, not to independently developed software or to acts permitted without a license by applicable law. Rights beyond this preview grant require a separate agreement with LKVexa.
+
+5. Public GitHub repositories, forks, and notices
+
+Nothing in this license limits rights granted to GitHub, its affiliates, or GitHub users under applicable GitHub platform terms, including public-repository viewing and forking rights. In addition to those independent rights, you may maintain and share a public GitHub fork of the Preview Material, including test modifications, solely for evaluation, testing, and proposing improvements. Include this complete license and all applicable notices; prominently identify modified files and describe the changes. Do not describe a fork as an official LKVexa release or imply endorsement.
+
+Recipients obtain any preview permissions directly under these terms, not through a sublicense from you. This license does not require confidentiality for publicly available code or test findings. You may publish your own evaluation findings and benchmarks, including reasonable excerpts needed to explain them, while preserving applicable notices on reproduced material. A public repository is not a grant of unrestricted use of the Preview Material.
+
+6. Feedback and contributions
+
+Feedback is voluntary. If you intentionally send LKVexa non-code suggestions or bug reports about this product, you permit LKVexa to use the ideas in that feedback to improve its products without payment or an obligation to implement them. You retain ownership of your feedback and contributions. This permission is not an assignment of copyright, does not grant rights in an entire contribution merely because it accompanies feedback, and does not authorize disclosure of material you identify as confidential and which LKVexa separately agrees to receive on that basis.
+
+Any source-code, documentation, or other copyrightable contribution requires the permissions under which it is submitted, including applicable repository and GitHub terms or a separate written agreement. This paragraph does not create a broader contribution license or require anyone to submit private modifications. You should submit only material you are entitled to share.
+
+7. Ownership, inputs, and trademarks
+
+LKVexa and the applicable rights holders retain ownership of their respective material. You retain rights in your own original modifications, subject to the rights in the underlying material. This license makes no ownership claim over your input data or test results, except that copies of Preview Material or third-party material within them retain their applicable terms.
+
+No trademark, trade-name, logo, endorsement, or patent license is granted by this license. You may identify the product factually and reproduce required notices without implying endorsement. Independently granted third-party patent or trademark permissions are unaffected. Rights not expressly granted remain reserved, subject to applicable law.
+
+8. Preview condition, support, and liability
+
+To the extent permitted by applicable law, the Preview Material is supplied as is and as available, without warranties, including warranties of merchantability, fitness for a particular purpose, title, noninfringement, accuracy, or uninterrupted operation. LKVexa does not promise production suitability, correctness of game outcomes or generated results, model compatibility, maintenance, updates, or technical support.
+
+To the extent permitted by applicable law, LKVexa is not liable for indirect, incidental, special, consequential, or punitive damages, or lost profits, revenue, data, or business opportunities arising from the Preview Material or this license. Nothing excludes or limits liability or statutory rights that applicable law does not allow to be excluded or limited.
+
+9. Breach and termination
+
+Your permissions under this license terminate if you materially breach its terms. On termination, stop using the Preview Material and delete copies under your control, including modified copies, except copies you must retain by law or solely as records of legal compliance. Retained copies may not be used to operate the software under this license. If you cure the breach within 30 days after discovering it or receiving notice of it, whichever occurs first, your permissions are automatically reinstated. Otherwise, reinstatement requires LKVexa's written permission.
+
+Termination affects only the permissions granted by this license. It does not terminate other recipients' independent permissions, third-party licenses, rights granted under GitHub platform terms, or rights available under applicable law. Sections addressing ownership, preserved third-party rights, notices, disclaimers, liability, and the effects of termination continue as relevant after termination.
+
+10. Interpretation
+
+This is a bespoke source-available preview license, not a standard open-source license. It does not designate a governing jurisdiction or require arbitration. If a provision cannot be applied under applicable law, the remaining provisions continue to the extent permitted by that law. No statement in this license guarantees its enforceability in every jurisdiction. Only a separate written agreement with LKVexa can grant additional rights beyond this license; it cannot withdraw rights held independently under a third-party license or applicable law.

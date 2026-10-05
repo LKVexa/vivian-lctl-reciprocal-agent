@@ -1,0 +1,23 @@
+{
+  "prompt": "Prepare a concise draft and review it for correctness.",
+  "own_payoffs": [
+    [
+      2,
+      5
+    ],
+    [
+      4,
+      1
+    ]
+  ],
+  "opponent_actions": [
+    0,
+    1,
+    1,
+    0,
+    1,
+    0,
+    0,
+    1
+  ]
+}

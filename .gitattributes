@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.brimg binary
+*.lctlc -text
+*.brir -text

@@ -1,0 +1,10 @@
+LCTLC/1.1
+# Copy previous opponent action R1 into R15; host supplies opening action 0.
+@unit id=vivian.player_reciprocal version=4.7.0 profile=brvm-native entry=A001 target=local-reference backend=brir network=deny replay=deterministic image_version=10 requested_caps=CONTROL|ARITH max_steps=256 termination=bounded
+@defaults mode=CHECKED width=WIDE
+@frame id=F0000 parent=ROOT module=vivian.player_reciprocal
+ID|LANE|OP|OUT|CTRL|IN|ARG|META
+A001|player_reciprocal|MOVI|R9|C0|_|u64:1|width=WIDE
+A002|player_reciprocal|AND|R15|C0|R1>R9|_|width=WIDE
+A003|player_reciprocal|HALT|_|C0|_|_|_
+@end

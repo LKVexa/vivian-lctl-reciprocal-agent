@@ -1,0 +1,15 @@
+{
+  "schema": "vivian.lctl-single-agent.v1",
+  "version": "1.0.0",
+  "agent_id": "player_reciprocal",
+  "display_name": "Reciprocal",
+  "repository": "vivian-lctl-reciprocal-agent",
+  "scaffold": "BOTTLE_ROCKET_5.0.1_VM_110K_RC",
+  "lctl_profile": "LCTLC/1.1",
+  "frozen_source_authority": "4.7.0",
+  "policy_sha256": {
+    "source_sha256": "c72061f516666ccf983f5882ac0ba301b60e74093effd1278572fa8bab374c4a",
+    "image_sha256": "3077615fa66bd5e10cc82e8bb910378311f068dd4586dc9b3c2fb35debfc4b73",
+    "brir_sha256": "53d2e0f433d19bcbc293227fbaa765ace3a098d392402664dfe00bcd22e34c6f"
+  }
+}

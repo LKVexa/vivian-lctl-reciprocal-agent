@@ -1,0 +1,19 @@
+{
+  "round": 0,
+  "previous_opponent": 0,
+  "previous_own": 0,
+  "own_payoffs": [
+    [
+      2,
+      5
+    ],
+    [
+      4,
+      1
+    ]
+  ],
+  "counterfactual_totals": [
+    0,
+    0
+  ]
+}

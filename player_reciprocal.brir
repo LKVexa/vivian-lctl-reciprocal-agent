@@ -1,0 +1,5 @@
+BRIR/1.1
+unit=vivian.player_reciprocal|language=LCTLC/1.1|isa=4.1|abi=1.0|features=0x38|image=10|max_steps=256|declared=0x03|derived=0x03
+0|A001|MOVI|CHECKED|R9|R0|R0|C0|1|need=0x01|succ=1|line=7|stack=0|call=0
+1|A002|AND|CHECKED|R15|R1|R9|C0|0|need=0x02|succ=2|line=8|stack=0|call=0
+2|A003|HALT|WRAP|R0|R0|R0|C0|0|need=0x01|succ=HALT|line=9|stack=0|call=0
