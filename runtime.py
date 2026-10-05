@@ -63,6 +63,7 @@ class Program:
     instructions: tuple[Instruction, ...]
     max_steps: int
     requested_caps: int
+    brir_sha256: str | None = None
 
 
 def _bounded_read(path: Path, maximum: int) -> bytes:
@@ -73,35 +74,58 @@ def _bounded_read(path: Path, maximum: int) -> bytes:
     return data
 
 
+def _expected_hashes(values: Mapping[str, str] | None) -> dict[str, str] | None:
+    if values is None:
+        return None
+    fields = {'source_sha256', 'image_sha256', 'brir_sha256'}
+    if not isinstance(values, Mapping) or set(values) != fields:
+        raise PolicyError('Expected hashes require source_sha256, image_sha256 and brir_sha256 only')
+    pins = dict(values)
+    if any(type(value) is not str or len(value) != 64 or
+           any(char not in '0123456789abcdefABCDEF' for char in value)
+           for value in pins.values()):
+        raise PolicyError('Expected policy hashes must be 64 hexadecimal characters')
+    return {key: value.lower() for key, value in pins.items()}
+
+
 def load_program(source_path: str | Path, image_path: str | Path | None = None,
-                 brir_path: str | Path | None = None) -> Program:
+                 brir_path: str | Path | None = None, *,
+                 expected_hashes: Mapping[str, str] | None = None) -> Program:
     """Verify an LCTL source/BRIM pair and admit only pure bounded policies.
 
-    If a sibling .brir exists, its exact byte hash is also bound to the image.
+    Read each file once with a byte bound. Optional manifest hashes are checked
+    against those same snapshots, before parsing. No caller-side prehash/reopen
+    is needed. A pinned triple or explicit brir_path requires the BRIR file.
+    Without either, a sibling .brir remains optional; if present it is checked.
     Source changes require recompilation by the native BottleRocket compiler.
     Cryptographic hashes detect mismatch; these local policies are unsigned.
     """
+    pins = _expected_hashes(expected_hashes)
     source_path = Path(source_path)
     image_path = Path(image_path) if image_path is not None else source_path.with_suffix('.brimg')
+    require_brir = brir_path is not None or pins is not None
+    brir_path = Path(brir_path) if brir_path is not None else image_path.with_suffix('.brir')
     try:
         source = _bounded_read(source_path, MAX_SOURCE_BYTES)
         blob = _bounded_read(image_path, MAX_IMAGE_BYTES)
+        brir = _bounded_read(brir_path, MAX_SOURCE_BYTES) if require_brir or brir_path.is_file() else None
+        source_hash = sha256(source).hexdigest()
+        image_hash = sha256(blob).hexdigest()
+        brir_hash = sha256(brir).hexdigest() if brir is not None else None
+        actual = {'source_sha256': source_hash, 'image_sha256': image_hash, 'brir_sha256': brir_hash}
+        if pins is not None:
+            for key, expected in pins.items():
+                if actual[key] != expected:
+                    raise PolicyError(f'Policy distribution hash mismatch: {key}')
         parsed = parse_brim(blob)
     except (OSError, VerifyError, IndexError, OverflowError) as exc:
         raise PolicyError(f'Policy verification failed: {exc}') from exc
     if not source.startswith(b'LCTLC/1.1\n') or b'\r' in source:
         raise PolicyError('Source must be native LCTLC/1.1 with LF line endings')
-    source_hash = sha256(source).hexdigest()
     if source_hash != parsed.source_sha256:
         raise PolicyError('LCTL source hash does not match compiled BRIM')
-    require_brir = brir_path is not None
-    brir_path = Path(brir_path) if require_brir else image_path.with_suffix('.brir')
-    try:
-        if require_brir or brir_path.is_file():
-            if sha256(_bounded_read(brir_path, MAX_SOURCE_BYTES)).hexdigest() != parsed.brir_sha256:
-                raise PolicyError('BRIR hash does not match compiled BRIM')
-    except OSError as exc:
-        raise PolicyError(f'Cannot read BRIR: {exc}') from exc
+    if brir_hash is not None and brir_hash != parsed.brir_sha256:
+        raise PolicyError('BRIR hash does not match compiled BRIM')
     if parsed.flags & 2:
         raise PolicyError('This adapter accepts only unsigned local policies; use the native secure host for signatures')
     if parsed.requested_caps & ~3 or parsed.data_bytes:
@@ -116,8 +140,8 @@ def load_program(source_path: str | Path, image_path: str | Path | None = None,
             raise PolicyError('Shift exceeds bounded policy profile')
         instructions.append(Instruction(*(row[key] for key in ('op', 'mode', 'rd', 'ra', 'rb', 'imm'))))
     return Program(str(source_path), str(image_path), source_hash,
-                   sha256(blob).hexdigest(), tuple(instructions),
-                   parsed.max_steps, parsed.requested_caps)
+                   image_hash, tuple(instructions),
+                   parsed.max_steps, parsed.requested_caps, brir_hash)
 
 
 def run_program(program: Program, registers: Mapping[int, int] | Sequence[int] | None = None,
@@ -194,6 +218,8 @@ def run_program(program: Program, registers: Mapping[int, int] | Sequence[int] |
         trace.append(event)
         if op == 'HALT':
             return {'registers': regs, 'steps': step, 'trace': trace, 'flags': flags,
+                    'source_sha256': program.source_sha256, 'image_sha256': program.image_sha256,
+                    'brir_sha256': program.brir_sha256,
                     'halted': True, 'status': 'HALTED'}
         pc = next_pc
     raise PolicyError(f'Policy exhausted its {min(program.max_steps, MAX_STEPS)}-step budget')
